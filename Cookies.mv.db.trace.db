@@ -1,0 +1,8 @@
+2016-05-05 13:36:35 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Ð¢Ð°Ð±Ð»Ð¸Ñ†Ð° "COOKIES" Ð½Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½Ð°
+Table "COOKIES" not found; SQL statement:
+SELECT * FROM COOKIES [42102-191]
+2016-05-05 13:37:47 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Ð¢Ð°Ð±Ð»Ð¸Ñ†Ð° "COOKIES" Ð½Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½Ð°
+Table "COOKIES" not found; SQL statement:
+SELECT * FROM COOKIES [42102-191]

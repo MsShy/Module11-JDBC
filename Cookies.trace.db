@@ -1,0 +1,12 @@
+2016-05-05 13:38:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Ð¢Ð°Ð±Ð»Ð¸Ñ†Ð° "ADD" Ð½Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½Ð°
+Table "ADD" not found; SQL statement:
+alter table add column id INT [42102-191]
+2016-05-05 13:39:18 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Ð¡Ð¸Ð½Ñ‚Ð°ÐºÑ�Ð¸Ñ‡ÐµÑ�ÐºÐ°Ñ� Ð¾ÑˆÐ¸Ð±ÐºÐ° Ð² Ð²Ñ‹Ñ€Ð°Ð¶ÐµÐ½Ð¸Ð¸ SQL "DROP COOKIES[*] "; Ð¾Ð¶Ð¸Ð´Ð°Ð»Ð¾Ñ�ÑŒ "TABLE, INDEX, USER, SEQUENCE, CONSTANT, TRIGGER, VIEW, ROLE, ALIAS, SCHEMA, ALL, DOMAIN, TYPE, DATATYPE, AGGREGATE"
+Syntax error in SQL statement "DROP COOKIES[*] "; expected "TABLE, INDEX, USER, SEQUENCE, CONSTANT, TRIGGER, VIEW, ROLE, ALIAS, SCHEMA, ALL, DOMAIN, TYPE, DATATYPE, AGGREGATE"; SQL statement:
+drop COOKIES [42001-191]
+2016-05-05 13:40:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Ð¢Ð°Ð±Ð»Ð¸Ñ†Ð° "TABLE" Ð½Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½Ð°
+Table "TABLE" not found; SQL statement:
+insert into table cookies values(1, 'Bla bla bla') [42102-191]

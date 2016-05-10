@@ -8,8 +8,8 @@ import java.util.concurrent.BlockingQueue;
 
 public class ConnectionPool {
 	
-	private BlockingQueue<Connection> available;
-	private BlockingQueue<Connection> used;
+	private BlockingQueue<PooledConnection> available;
+	private BlockingQueue<PooledConnection> used;
 	private final String url;
 	private final String user;
 	private final String password;
@@ -25,8 +25,8 @@ public class ConnectionPool {
 		
 		try {
 			Class.forName("org.h2.Driver");
-			used = new ArrayBlockingQueue<Connection>(CONNECTION_SIZE);
-			available = new ArrayBlockingQueue<Connection>(CONNECTION_SIZE);
+			used = new ArrayBlockingQueue<PooledConnection>(CONNECTION_SIZE);
+			available = new ArrayBlockingQueue<PooledConnection>(CONNECTION_SIZE);
 			for (int index = 0; index < CONNECTION_SIZE; index++) {
 				connection = DriverManager.getConnection(url, user, password);
 				PooledConnection pooledConnection = new PooledConnection(connection, this);
@@ -41,7 +41,7 @@ public class ConnectionPool {
 	public Connection getConnection() throws InterruptedException {
 		PooledConnection pooledConnection = null;
 		if (available != null) {
-			pooledConnection = (PooledConnection) available.take();
+			pooledConnection = available.take();
 			used.add(pooledConnection);
 		}
 
@@ -52,37 +52,40 @@ public class ConnectionPool {
 
 	public void giveBackConnection(PooledConnection connection) {
 
-		if (connection != null) {
-			used.remove(connection);
-			available.add(connection);
+		if (connection != null & used.contains(connection)) {
+
+				used.remove(connection);
+				available.add(connection);
+
+			}
 		}
-	}
+
 	
 	public void close() {
-		PooledConnection pooledConnection ;
-		for (Connection connection : used) {
+
+
+		for (PooledConnection pooledConnection1 : used) {
+
 			try {
-				connection.close();
+				pooledConnection1.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 
-		for (Connection connection1 : available) {
+
+		for (PooledConnection pooledConnection1 : available) {
 			try {
-				pooledConnection = (PooledConnection) available.take();
-				pooledConnection.closeReally();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				pooledConnection1.closeReally();
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 
 		}
 
 
 	}
 	
-
+}
 

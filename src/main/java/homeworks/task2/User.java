@@ -1,20 +1,22 @@
-package homeworks.task1;
+package homeworks.task2;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public class Functionality {
+public class User implements DaoManager {
 
 
 	private Connection connection;
 
 
-
-	public Functionality(final Connection connection) {
+	public User(final Connection connection) {
 		this.connection = connection;
-
 	}
 
-	public void selectAll(String tableName) {
+	@Override
+	public void selectAll(final String tableName) {
 		String select = String.format("SELECT * FROM %s ORDER BY ID", tableName);
 		try (PreparedStatement statement = connection.prepareStatement(select);
 		     ResultSet resultSet = statement.executeQuery()) {
@@ -28,6 +30,7 @@ public class Functionality {
 		}
 	}
 
+	@Override
 	public void selectSpecificInformation() {
 		String field = "SELECT FIRSTNAME, EMAIL FROM USERS WHERE FIRSTNAME LIKE 'T%'";
 		try (PreparedStatement statement = connection.prepareStatement(field);
@@ -40,6 +43,7 @@ public class Functionality {
 		}
 	}
 
+	@Override
 	public int insert() {
 		int rows = -1;
 		String insert = "INSERT INTO USERS (LASTNAME, FIRSTNAME, EMAIL, PASSWORD) VALUES (?, ?, ?, ?)";
@@ -57,6 +61,7 @@ public class Functionality {
 		return rows;
 	}
 
+	@Override
 	public void update() {
 		String update = "UPDATE USERS SET YEAROFBIRTH=? WHERE FIRSTNAME=?";
 		try (PreparedStatement statement = connection.prepareStatement(update)) {
@@ -68,15 +73,15 @@ public class Functionality {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 
+	@Override
 	public int delete() {
-	int rows = -1;
+		int rows = -1;
 
 		String field = "DELETE from USERS WHERE ID >=?";
 		try (PreparedStatement statement = connection.prepareStatement(field)) {
-				statement.setInt(1, 34);
+			statement.setInt(1, 34);
 			rows = statement.executeUpdate();
 			System.out.println("Delete count = " + rows);
 		} catch (SQLException e) {
@@ -84,6 +89,5 @@ public class Functionality {
 		}
 		return rows;
 	}
-
 
 }

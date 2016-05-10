@@ -33,9 +33,7 @@ public class ConnectionPool {
 				available.add(pooledConnection);
 
 			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -61,18 +59,30 @@ public class ConnectionPool {
 	}
 	
 	public void close() {
-
+		PooledConnection pooledConnection ;
 		for (Connection connection : used) {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		for (Connection connection1 : available) {
+			try {
+				pooledConnection = (PooledConnection) available.take();
+				pooledConnection.closeReally();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
 
 		}
-		used = null;
-		available = null;
 
 
 	}
-
-
-}
 	
-}
+
 
